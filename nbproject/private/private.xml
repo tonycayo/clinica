@@ -3,7 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Administrador/Documents/NetBeansProjects/clinica/web/index.html</file>
+            <file>file:/C:/Users/Administrador/Documents/NetBeansProjects/clinica/web/index.jsp</file>
+            <file>file:/C:/Users/Administrador/Documents/NetBeansProjects/clinica/src/java/Utils/ConexionDB.java</file>
+            <file>file:/C:/Users/Administrador/Documents/NetBeansProjects/clinica/src/java/Beans/Usuarios.java</file>
+            <file>file:/C:/Users/Administrador/Documents/NetBeansProjects/clinica/src/java/Servlets/ServletUsuarios.java</file>
         </group>
     </open-files>
 </project-private>
