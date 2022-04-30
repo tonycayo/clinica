@@ -1,12 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Servlets;
 
 import Beans.Usuarios;
 import Utils.ConexionDB;
+import static Utils.Tools.getCurrentTimeStamp;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
@@ -50,31 +46,57 @@ public class ServletUsuarios extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
 
-        String op = request.getParameter("op");
-
-        if (op.equals("listar")) {
+        String borrar = request.getParameter("del");
+        String actualizar = request.getParameter("upd");
+        if (borrar != null) {
             try {
-                PreparedStatement sta = ConexionDB.getConexion().prepareCall("select * from usuarios");
+                PreparedStatement sta = ConexionDB.getConexion().prepareStatement("delete from usuario where idpersona=?");
+                sta.setInt(1, Integer.parseInt(borrar));
+                sta.executeUpdate();
+
+                response.sendRedirect("ServletUsuarios");
+
+            } catch (Exception e) {
+                System.out.println("Error: " + e);
+            }
+        } else if (actualizar != null) {
+            try {
+                PreparedStatement sta = ConexionDB.getConexion().prepareStatement("select * from usuario where idpersona=?");
+                sta.setInt(1, Integer.parseInt(actualizar));
                 ResultSet rs = sta.executeQuery();
 
                 ArrayList<Usuarios> lista = new ArrayList<>();
 
                 while (rs.next()) {
-                    Usuarios e = new Usuarios(rs.getInt(1), rs.getInt(2),
-                            rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6));
-                    lista.add(e);
+                    Usuarios u = new Usuarios(rs.getInt(1), rs.getString(2),
+                            rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6));
+                    lista.add(u);
                 }
-                request.setAttribute("lista", lista);
-                request.getRequestDispatcher("listado.jsp").forward(request, response);
+                request.setAttribute("u_lista", lista);
+                request.getRequestDispatcher("u_update.jsp").forward(request, response);
 
             } catch (Exception e) {
-
+                System.out.println("Error: " + e);
             }
-        } else if (op.equals("nuevo")) {
+        } else {
+            try {
+                PreparedStatement sta = ConexionDB.getConexion().prepareStatement("select * from usuario");
+                ResultSet rs = sta.executeQuery();
 
-        } else if (op.equals("eliminar")) {
+                ArrayList<Usuarios> lista = new ArrayList<>();
+
+                while (rs.next()) {
+                    Usuarios e = new Usuarios(rs.getInt(1), rs.getString(2),
+                            rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6));
+                    lista.add(e);
+                }
+                request.setAttribute("u_lista", lista);
+                request.getRequestDispatcher("u_listado.jsp").forward(request, response);
+
+            } catch (Exception e) {
+                System.out.println("Error: " + e);
+            }
         }
-
     }
 
     /**
@@ -89,6 +111,67 @@ public class ServletUsuarios extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+
+        String op = request.getParameter("op");
+
+        if (op.equals("nuevo")) {
+            try {
+                int estado;
+                if ("on".equals(request.getParameter("chkActivo"))) {
+                    estado = 1;
+                } else {
+                    estado = 0;
+                }
+
+                String usuario = request.getParameter("txtUsuario");
+                String u_pass = request.getParameter("txtPassword");
+                String tipo_usuario = request.getParameter("txtTipoUsuario");
+
+                PreparedStatement sta = ConexionDB.getConexion().prepareStatement("insert into usuario values(?,?,?,?,?,?)");
+
+                sta.setInt(1, 0);
+                sta.setString(2, usuario);
+                sta.setString(3, u_pass);
+                sta.setString(4, tipo_usuario);
+                sta.setTimestamp(5, getCurrentTimeStamp());
+                sta.setInt(6, estado);
+                sta.executeUpdate();
+
+                //request.getRequestDispatcher("index.jsp").forward(request, response);
+                response.sendRedirect("ServletUsuarios");
+
+            } catch (Exception e) {
+                System.out.println("Error: " + e);
+            }
+        } else if (op.equals("update")) {
+            try {
+                int estado;
+                if ("on".equals(request.getParameter("chkActivo"))) {
+                    estado = 1;
+                } else {
+                    estado = 0;
+                }
+
+                String id = request.getParameter("updId");
+                String u_pass = request.getParameter("txtPassword");
+                String tipo_usuario = request.getParameter("txtTipoUsuario");
+
+                PreparedStatement sta = ConexionDB.getConexion().prepareStatement("UPDATE usuario SET password=?,tipousuario=?,fecha=?,estado=? WHERE idpersona=?");
+
+                sta.setString(1, u_pass);
+                sta.setString(2, tipo_usuario);
+                sta.setTimestamp(3, getCurrentTimeStamp());
+                sta.setInt(4, estado);
+                sta.setInt(5, Integer.parseInt(id));
+                sta.executeUpdate();
+
+                //request.getRequestDispatcher("index.jsp").forward(request, response);
+                response.sendRedirect("ServletUsuarios");
+
+            } catch (Exception e) {
+                System.out.println("Error: " + e);
+            }
+        }
     }
 
     /**

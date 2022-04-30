@@ -3,11 +3,8 @@ package Beans;
 public class Usuarios {
     private int id,estado;
     private String usuario,u_pass,tipo_usuario,fecha_reg;
-    
-    //Date date = StringToDate("2015-12-06 17:03:00");
-    //Instant instant = Instant.now();
-
-    public Usuarios(int id, int estado, String usuario, String u_pass, String tipo_usuario, String fecha_reg) {
+ 
+    public Usuarios(int id, String usuario, String u_pass, String tipo_usuario, String fecha_reg, int estado) {
         this.id = id;
         this.estado = estado;
         this.usuario = usuario;
@@ -56,8 +53,8 @@ public class Usuarios {
         this.tipo_usuario = tipo_usuario;
     }
 
-    public String getFecha_reg() {
-        return fecha_reg;
+    public String getFecha_reg() {        
+        return fecha_reg;        
     }
 
     public void setFecha_reg(String fecha_reg) {
