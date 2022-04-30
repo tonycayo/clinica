@@ -122,19 +122,20 @@ DELETE FROM `persona`;
 -- Dumping structure for table clinica.usuario
 DROP TABLE IF EXISTS `usuario`;
 CREATE TABLE IF NOT EXISTS `usuario` (
+  `IDPERSONA` int(11) NOT NULL AUTO_INCREMENT,
   `USUARIO` varchar(15) NOT NULL,
-  `PASWORD` varchar(25) DEFAULT NULL,
-  `TIPOUSUARIO` varchar(20) DEFAULT NULL,
-  `FECHA` date DEFAULT NULL,
-  `IDPERSONA` int(11) DEFAULT NULL,
-  `ESTADO` int(11) DEFAULT NULL,
-  PRIMARY KEY (`USUARIO`),
-  KEY `FK_REFERENCE_1` (`IDPERSONA`),
-  CONSTRAINT `FK_REFERENCE_1` FOREIGN KEY (`IDPERSONA`) REFERENCES `persona` (`IDPERSONA`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `PASSWORD` varchar(25) NOT NULL,
+  `TIPOUSUARIO` varchar(20) NOT NULL,
+  `FECHA` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `ESTADO` int(11) NOT NULL,
+  PRIMARY KEY (`IDPERSONA`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table clinica.usuario: ~0 rows (approximately)
+-- Dumping data for table clinica.usuario: ~18 rows (approximately)
 DELETE FROM `usuario`;
+INSERT INTO `usuario` (`IDPERSONA`, `USUARIO`, `PASSWORD`, `TIPOUSUARIO`, `FECHA`, `ESTADO`) VALUES
+	(1, 'administrador', '123', 'admin', '2022-04-30 15:10:31', 0),
+	(20, 'gladys', 'nuevopass', 'soporte', '2022-04-30 15:39:09', 1);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
