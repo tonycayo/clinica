@@ -1,17 +1,33 @@
-<%-- 
-    Document   : m_nuevo
-    Created on : 29-abr-2022, 17:45:04
-    Author     : administrador
---%>
+<%@page import="Beans.Medicos"%>
+<%@page import="java.util.ArrayList"%>
+<jsp:include page="header.jsp" /> 
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
-    <body>
-        <h1>Hello World!</h1>
-    </body>
+<h3 align="center">Nuevo Médico</h3>
+<div class="container">
+    <form action="ServletMedicos" method="post">
+        <table class="table">                        
+            <tr>
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" name="chkActivo" id="flexSwitchCheckChecked" checked>
+                <label class="form-check-label" for="flexSwitchCheckChecked">Médico activo</label>
+            </div>
+        </tr><tr>
+        <td>Usuario: </td>
+        <td><input type="text" name="txtUsuario" class="form-control"></td>
+    </tr><tr>
+        <td>Password: </td>
+        <td><input type="password" name="txtPassword" class="form-control"></td>
+    </tr><tr>
+        <td>Tipo de Usuario: </td>
+        <td><input type="text" name="txtTipoUsuario" class="form-control"></td>
+    </tr><tr>
+        <td></td>
+        <td><input type="submit" value="Grabar Datos" class="btn btn-success"></td>
+    </tr>
+</table>
+<input type="hidden" name="op" value="nuevo">
+</form>
+</div>               
+</body>
+
 </html>

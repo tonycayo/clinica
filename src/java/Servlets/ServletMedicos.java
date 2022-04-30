@@ -1,17 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Servlets;
 
+import Beans.Medicos;
+import Utils.ConexionDB;
+import static Utils.Tools.getCurrentTimeStamp;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.ServletException;
+import java.sql.*;
+import java.util.*;
+import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 
 /**
  *
@@ -32,18 +30,7 @@ public class ServletMedicos extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ServletMedicos</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ServletMedicos at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -59,6 +46,58 @@ public class ServletMedicos extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+        
+        String borrar = request.getParameter("del");
+        String actualizar = request.getParameter("upd");
+        if (borrar != null) {
+            try {
+                PreparedStatement sta = ConexionDB.getConexion().prepareStatement("delete from medico where idpersona=?");
+                sta.setInt(1, Integer.parseInt(borrar));
+                sta.executeUpdate();
+
+                response.sendRedirect("ServletMedicos");
+
+            } catch (Exception e) {
+                System.out.println("Error: " + e);
+            }
+        } else if (actualizar != null) {
+            try {
+                PreparedStatement sta = ConexionDB.getConexion().prepareStatement("select * from medico where idpersona=?");
+                sta.setInt(1, Integer.parseInt(actualizar));
+                ResultSet rs = sta.executeQuery();
+
+                ArrayList<Medicos> lista = new ArrayList<>();
+
+                while (rs.next()) {
+                    Medicos m = new Medicos(rs.getInt(1), rs.getInt(2),
+                            rs.getInt(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7));
+                    lista.add(m);
+                }
+                request.setAttribute("m_lista", lista);
+                request.getRequestDispatcher("m_update.jsp").forward(request, response);
+
+            } catch (Exception e) {
+                System.out.println("Error: " + e);
+            }
+        } else {
+            try {
+                PreparedStatement sta = ConexionDB.getConexion().prepareStatement("select * from medico");
+                ResultSet rs = sta.executeQuery();
+
+                ArrayList<Medicos> lista = new ArrayList<>();
+
+                while (rs.next()) {
+                    Medicos m = new Medicos(rs.getInt(1), rs.getInt(2),
+                            rs.getInt(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7));
+                    lista.add(m);
+                }
+                request.setAttribute("m_lista", lista);
+                request.getRequestDispatcher("m_listado.jsp").forward(request, response);
+
+            } catch (Exception e) {
+                System.out.println("Error: " + e);
+            }
+        }
     }
 
     /**

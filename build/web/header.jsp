@@ -24,9 +24,9 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
                                 <li><a class="dropdown-item" href="ServletPacientes">Listar pacientes</a></li>
-                                <li><a class="dropdown-item" href="#">Agregar paciente</a></li>
+                                <li><a class="dropdown-item" href="p_nuevo.jsp">Nuevo paciente</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="#">Editar paciente</a></li>
+                                <li><a class="dropdown-item disabled" href="#">Reportes</a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
@@ -34,10 +34,10 @@
                                 Médicos
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                                <li><a class="dropdown-item" href="#">Listar médicos</a></li>
-                                <li><a class="dropdown-item" href="#">Agregar médico</a></li>
+                                <li><a class="dropdown-item" href="ServletMedicos">Listar médicos</a></li>
+                                <li><a class="dropdown-item" href="m_nuevo.jsp">Nuevo médico</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="#">Editar médico</a></li>
+                                <li><a class="dropdown-item disabled" href="#">Reportes</a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
@@ -45,10 +45,10 @@
                                 Citas
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                                <li><a class="dropdown-item" href="#">Listar citas</a></li>
-                                <li><a class="dropdown-item" href="#">Agregar cita</a></li>
+                                <li><a class="dropdown-item" href="ServletCitas">Listar citas</a></li>
+                                <li><a class="dropdown-item" href="c_nuevo.jsp">Nueva cita</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="#">Editar cita</a></li>
+                                <li><a class="dropdown-item disabled" href="#">Reportes</a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
@@ -65,7 +65,7 @@
                     </ul>
                     <form class="d-flex">
                         <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Buscar</button>
+                        <button class="btn btn-outline-success disabled" type="submit">Buscar</button>
                     </form>
                 </div>
             </div>
