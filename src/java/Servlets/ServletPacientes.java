@@ -1,22 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Servlets;
 
+import Beans.Pacientes;
+import Utils.ConexionDB;
+import static Utils.Tools.getCurrentTimeStamp;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.ServletException;
+import java.sql.*;
+import java.util.*;
+import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 
-/**
- *
- * @author administrador
- */
 @WebServlet(name = "ServletPacientes", urlPatterns = {"/ServletPacientes"})
 public class ServletPacientes extends HttpServlet {
 
@@ -32,18 +26,7 @@ public class ServletPacientes extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ServletPacientes</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ServletPacientes at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -59,6 +42,58 @@ public class ServletPacientes extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+
+        String borrar = request.getParameter("del");
+        String actualizar = request.getParameter("upd");
+        if (borrar != null) {
+            try {
+                PreparedStatement sta = ConexionDB.getConexion().prepareStatement("delete from persona where idpersona=?");
+                sta.setInt(1, Integer.parseInt(borrar));
+                sta.executeUpdate();
+
+                response.sendRedirect("ServletPacientes");
+
+            } catch (Exception e) {
+                System.out.println("Error: " + e);
+            }
+        } else if (actualizar != null) {
+            try {
+                PreparedStatement sta = ConexionDB.getConexion().prepareStatement("select * from persona where idpersona=?");
+                sta.setInt(1, Integer.parseInt(actualizar));
+                ResultSet rs = sta.executeQuery();
+
+                ArrayList<Pacientes> lista = new ArrayList<>();
+
+                while (rs.next()) {
+                    Pacientes p = new Pacientes(rs.getInt(1), rs.getString(2),
+                            rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getInt(11), rs.getInt(12), rs.getInt(13), rs.getString(14), rs.getInt(15));
+                    lista.add(p);
+                }
+                request.setAttribute("p_lista", lista);
+                request.getRequestDispatcher("p_update.jsp").forward(request, response);
+
+            } catch (Exception e) {
+                System.out.println("Error: " + e);
+            }
+        } else {
+            try {
+                PreparedStatement sta = ConexionDB.getConexion().prepareStatement("select * from persona");
+                ResultSet rs = sta.executeQuery();
+
+                ArrayList<Pacientes> lista = new ArrayList<>();
+
+                while (rs.next()) {
+                    Pacientes p = new Pacientes(rs.getInt(1), rs.getString(2),
+                            rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getInt(11), rs.getInt(12), rs.getInt(13), rs.getString(14), rs.getInt(15));
+                    lista.add(p);
+                }
+                request.setAttribute("p_lista", lista);
+                request.getRequestDispatcher("p_listado.jsp").forward(request, response);
+
+            } catch (Exception e) {
+                System.out.println("Error: " + e);
+            }
+        }
     }
 
     /**
@@ -73,6 +108,87 @@ public class ServletPacientes extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+
+        String op = request.getParameter("op");
+
+        if (op.equals("nuevo")) {
+            try {
+                int estado;
+                if ("on".equals(request.getParameter("chkActivo"))) {
+                    estado = 1;
+                } else {
+                    estado = 0;
+                }
+
+                String usuario = request.getParameter("txtUsuario");
+                String u_pass = request.getParameter("txtPassword");
+                String tipo_usuario = request.getParameter("txtTipoUsuario");
+
+                PreparedStatement sta = ConexionDB.getConexion().prepareStatement("insert into usuario values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+
+                sta.setInt(1, 0);
+                sta.setString(2, usuario);
+                sta.setString(3, u_pass);
+                sta.setString(4, tipo_usuario);
+                sta.setTimestamp(5, getCurrentTimeStamp());
+                sta.setInt(6, estado);
+                sta.executeUpdate();
+
+                //request.getRequestDispatcher("index.jsp").forward(request, response);
+                response.sendRedirect("ServletPacientes");
+
+            } catch (Exception e) {
+                System.out.println("Error: " + e);
+            }
+        } else if (op.equals("update")) {
+            try {
+                int estado;
+                if ("on".equals(request.getParameter("chkActivo"))) {
+                    estado = 1;
+                } else {
+                    estado = 0;
+                }
+
+                String id = request.getParameter("updId");
+                String tipo_doc = request.getParameter("txtTipoDoc");
+                String doc = request.getParameter("txtDoc");
+                String apepat = request.getParameter("txtApePat");
+                String apemat = request.getParameter("txtApeMat");
+                String nombres = request.getParameter("txtNombres");
+                String fecha_nac = request.getParameter("txtFechaNac");
+                String sexo = request.getParameter("txtSexo");
+                String email = request.getParameter("txtEmail");
+                String espaciente = request.getParameter("txtEsPaciente");
+                String espersona = request.getParameter("txtEsPersona");
+                String esmedico = request.getParameter("txtEsMedico");                
+
+                PreparedStatement sta = ConexionDB.getConexion().prepareStatement("UPDATE usuario SET "
+                        + "tipodocumento=?,documento=?,apellidospaterno=?,apellidosmaterno=?,"
+                        + "nombres=?, fechanacimiento=?, sexo=?, email=?, espaciente=?, "
+                        + "espersona=?,esmedico=?,fecha=?,estado=? WHERE idpersona=?");
+
+                sta.setString(1, tipo_doc);
+                sta.setString(2, doc);
+                sta.setString(3, apepat);
+                sta.setString(4, apemat);
+                sta.setString(5, nombres);
+                sta.setString(6, fecha_nac);
+                sta.setString(7, sexo);
+                sta.setString(8, email);
+                sta.setInt(9, Integer.parseInt(espaciente));
+                sta.setInt(10, Integer.parseInt(espersona));
+                sta.setInt(11, Integer.parseInt(esmedico));                
+                sta.setTimestamp(12, getCurrentTimeStamp());
+                sta.setInt(13, estado);
+                sta.setInt(14, Integer.parseInt(id));
+                sta.executeUpdate();
+                
+                response.sendRedirect("ServletPacientes");
+
+            } catch (Exception e) {
+                System.out.println("Error: " + e);
+            }
+        }
     }
 
     /**

@@ -86,9 +86,9 @@ public class ServletUsuarios extends HttpServlet {
                 ArrayList<Usuarios> lista = new ArrayList<>();
 
                 while (rs.next()) {
-                    Usuarios e = new Usuarios(rs.getInt(1), rs.getString(2),
+                    Usuarios u = new Usuarios(rs.getInt(1), rs.getString(2),
                             rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6));
-                    lista.add(e);
+                    lista.add(u);
                 }
                 request.setAttribute("u_lista", lista);
                 request.getRequestDispatcher("u_listado.jsp").forward(request, response);

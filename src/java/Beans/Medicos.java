@@ -4,7 +4,7 @@ public class Medicos {
     private int id,estado,especialidad;
     private String tipo_persona,cmp,fecha_inicio,fecha_reg;
 
-    public Medicos(int id, int estado, int especialidad, String tipo_persona, String cmp, String fecha_inicio, String fecha_reg) {
+    public Medicos(int id, int especialidad, String tipo_persona, String cmp, String fecha_inicio, String fecha_reg, int estado) {
         this.id = id;
         this.estado = estado;
         this.especialidad = especialidad;

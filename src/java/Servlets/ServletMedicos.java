@@ -30,7 +30,7 @@ public class ServletMedicos extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -46,7 +46,7 @@ public class ServletMedicos extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        
+
         String borrar = request.getParameter("del");
         String actualizar = request.getParameter("upd");
         if (borrar != null) {
@@ -70,7 +70,7 @@ public class ServletMedicos extends HttpServlet {
 
                 while (rs.next()) {
                     Medicos m = new Medicos(rs.getInt(1), rs.getInt(2),
-                            rs.getInt(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7));
+                            rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7));
                     lista.add(m);
                 }
                 request.setAttribute("m_lista", lista);
@@ -88,7 +88,7 @@ public class ServletMedicos extends HttpServlet {
 
                 while (rs.next()) {
                     Medicos m = new Medicos(rs.getInt(1), rs.getInt(2),
-                            rs.getInt(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7));
+                            rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7));
                     lista.add(m);
                 }
                 request.setAttribute("m_lista", lista);
@@ -112,6 +112,71 @@ public class ServletMedicos extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+
+        String op = request.getParameter("op");
+
+        if (op.equals("nuevo")) {
+            try {
+                int estado;
+                if ("on".equals(request.getParameter("chkActivo"))) {
+                    estado = 1;
+                } else {
+                    estado = 0;
+                }
+
+                String especialidad = request.getParameter("txtEspecialidad");
+                String tipo_persona = request.getParameter("txtTipoPersona");
+                String cod_cmp = request.getParameter("txtCodCMP");
+
+                PreparedStatement sta = ConexionDB.getConexion().prepareStatement("insert into medico values(?,?,?,?,?,?,?)");
+
+                sta.setInt(1, 0);
+                sta.setInt(2, Integer.parseInt(especialidad));
+                sta.setString(3, tipo_persona);
+                sta.setString(4, cod_cmp);
+                sta.setTimestamp(5, getCurrentTimeStamp());
+                sta.setTimestamp(6, getCurrentTimeStamp());
+                sta.setInt(7, estado);
+                sta.executeUpdate();
+
+                //request.getRequestDispatcher("index.jsp").forward(request, response);
+                response.sendRedirect("ServletMedicos");
+
+            } catch (Exception e) {
+                System.out.println("Error: " + e);
+            }
+        } else if (op.equals("update")) {
+            try {
+                int estado;
+                if ("on".equals(request.getParameter("chkActivo"))) {
+                    estado = 1;
+                } else {
+                    estado = 0;
+                }
+
+                String id = request.getParameter("updId");
+                String especialidad = request.getParameter("txtEspecialidad");
+                String tipo_persona = request.getParameter("txtTipoPersona");
+                String cod_cmp = request.getParameter("txtCodCMP");
+
+                PreparedStatement sta = ConexionDB.getConexion().prepareStatement("UPDATE medico SET idespecialidad=?,tipopersona=?,codigomedico=?,fechaingreso=?,fecha=?,estado=? WHERE idpersona=?");
+
+                sta.setInt(1, Integer.parseInt(especialidad));
+                sta.setString(2, tipo_persona);
+                sta.setString(3, cod_cmp);
+                sta.setTimestamp(4, getCurrentTimeStamp());
+                sta.setTimestamp(5, getCurrentTimeStamp());
+                sta.setInt(6, estado);
+                sta.setInt(7, Integer.parseInt(id));
+                sta.executeUpdate();
+
+                //request.getRequestDispatcher("index.jsp").forward(request, response);
+                response.sendRedirect("ServletMedicos");
+
+            } catch (Exception e) {
+                System.out.println("Error: " + e);
+            }
+        }
     }
 
     /**

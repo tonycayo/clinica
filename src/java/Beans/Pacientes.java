@@ -4,22 +4,22 @@ public class Pacientes {
     private int id,estado,espaciente,espersona,esmedico;
     private String tipo_doc,doc,apepat,apemat,nombres,nombrecompleto,sexo,email,fecha_nac,fecha_reg;
 
-    public Pacientes(int id, int estado, int espaciente, int espersona, int esmedico, String tipo_doc, String doc, String apepat, String apemat, String nombres, String nombrecompleto, String sexo, String email, String fecha_nac, String fecha_reg) {
-        this.id = id;
-        this.estado = estado;
-        this.espaciente = espaciente;
-        this.espersona = espersona;
-        this.esmedico = esmedico;
+    public Pacientes(int id, String tipo_doc, String doc, String apepat, String apemat, String nombres, String nombrecompleto, String fecha_nac, String sexo, String email, int espaciente, int espersona, int esmedico, String fecha_reg, int estado) {
+        this.id = id;        
         this.tipo_doc = tipo_doc;
         this.doc = doc;
         this.apepat = apepat;
         this.apemat = apemat;
         this.nombres = nombres;
         this.nombrecompleto = nombrecompleto;
-        this.sexo = sexo;
-        this.email = email;
         this.fecha_nac = fecha_nac;
+        this.sexo = sexo;
+        this.email = email;        
+        this.espaciente = espaciente;
+        this.espersona = espersona;
+        this.esmedico = esmedico;
         this.fecha_reg = fecha_reg;
+        this.estado = estado;
     }
 
     public int getId() {

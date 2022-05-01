@@ -12,14 +12,17 @@
                 <label class="form-check-label" for="flexSwitchCheckChecked">Médico activo</label>
             </div>
         </tr><tr>
-        <td>Usuario: </td>
-        <td><input type="text" name="txtUsuario" class="form-control"></td>
+        <td>ID especialidad: </td>
+        <td><input type="text" name="txtEspecialidad" class="form-control"></td>
     </tr><tr>
-        <td>Password: </td>
-        <td><input type="password" name="txtPassword" class="form-control"></td>
+        <td>Tipo Persona: </td>
+        <td><input type="text" name="txtTipoPersona" class="form-control"></td>
     </tr><tr>
-        <td>Tipo de Usuario: </td>
-        <td><input type="text" name="txtTipoUsuario" class="form-control"></td>
+        <td>Código CMP: </td>
+        <td><input type="text" name="txtCodCMP" class="form-control"></td>
+    </tr><tr>
+        <td>Fecha de inicio de labores: </td>
+        <td><input type="text" name="txtFechaIng" class="form-control"></td>
     </tr><tr>
         <td></td>
         <td><input type="submit" value="Grabar Datos" class="btn btn-success"></td>
