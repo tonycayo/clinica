@@ -16,7 +16,7 @@
         <td><input type="text" name="txtTipoDoc" class="form-control"></td>
     </tr><tr>
         <td>Documento: </td>
-        <td><input type="password" name="txtDoc" class="form-control"></td>
+        <td><input type="text" name="txtDoc" class="form-control"></td>
     </tr><tr>
         <td>Apellido Paterno: </td>
         <td><input type="text" name="txtApePat" class="form-control"></td>
@@ -25,7 +25,7 @@
         <td><input type="text" name="txtApeMat" class="form-control"></td>
     </tr><tr>
         <td>Nombres: </td>
-        <td><input type="password" name="txtNombres" class="form-control"></td>
+        <td><input type="text" name="txtNombres" class="form-control"></td>
     </tr><tr>
         <td>Fecha de Nacimiento: </td>
         <td><input type="text" name="txtFechaNac" class="form-control"></td>

@@ -13,8 +13,7 @@
             <th>FechaNac</th>
             <th>Sexo</th>                   
             <th>FechaReg</th>
-            <th>Estado</th>
-            <th>Fecha de Registro</th>
+            <th>Estado</th>            
         </tr>                        
         <%
             ArrayList<Pacientes> lista = (ArrayList<Pacientes>) request.getAttribute("p_lista");
@@ -23,8 +22,6 @@
         %>
         <tr>
             <td><%=p.getId()%></td>
-            <td><%=p.getTipo_doc()%></td>
-            <td><%=p.getDoc()%></td>
             <td><%=p.getApepat()%></td>
             <td><%=p.getApemat()%></td>
             <td><%=p.getNombres()%></td>                      

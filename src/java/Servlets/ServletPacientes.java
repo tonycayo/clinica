@@ -120,18 +120,54 @@ public class ServletPacientes extends HttpServlet {
                     estado = 0;
                 }
 
-                String usuario = request.getParameter("txtUsuario");
-                String u_pass = request.getParameter("txtPassword");
-                String tipo_usuario = request.getParameter("txtTipoUsuario");
+                String id = request.getParameter("updId");
+                String tipo_doc = request.getParameter("txtTipoDoc");
+                String doc = request.getParameter("txtDoc");
+                String apepat = request.getParameter("txtApePat");
+                String apemat = request.getParameter("txtApeMat");
+                String nombres = request.getParameter("txtNombres");
+                String fecha_nac = request.getParameter("txtFechaNac");
+                String sexo = request.getParameter("txtSexo");
+                String email = request.getParameter("txtEmail");
+                
+                int espaciente;
+                if ("on".equals(request.getParameter("flexRadioEsPaciente"))) {
+                    espaciente = 1;
+                } else {
+                    espaciente = 0;
+                }
 
-                PreparedStatement sta = ConexionDB.getConexion().prepareStatement("insert into usuario values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                int espersona;
+                if ("on".equals(request.getParameter("flexRadioEsPersona"))) {
+                    espersona = 1;
+                } else {
+                    espersona = 0;
+                }
+                
+                int esmedico;
+                if ("on".equals(request.getParameter("flexRadioEsMedico"))) {
+                    esmedico = 1;
+                } else {
+                    esmedico = 0;
+                }
+                
+                PreparedStatement sta = ConexionDB.getConexion().prepareStatement("insert into persona values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
                 sta.setInt(1, 0);
-                sta.setString(2, usuario);
-                sta.setString(3, u_pass);
-                sta.setString(4, tipo_usuario);
-                sta.setTimestamp(5, getCurrentTimeStamp());
-                sta.setInt(6, estado);
+                sta.setString(2, tipo_doc);
+                sta.setString(3, doc);
+                sta.setString(4, apepat);
+                sta.setString(5, apemat);
+                sta.setString(6, nombres);
+                sta.setString(7, nombres + " " + apepat + " " + apemat);
+                sta.setTimestamp(8, getCurrentTimeStamp());
+                sta.setString(9, sexo);
+                sta.setString(10, email);
+                sta.setInt(11, espaciente);
+                sta.setInt(12, espersona);
+                sta.setInt(13, esmedico);
+                sta.setTimestamp(14, getCurrentTimeStamp());
+                sta.setInt(15, estado);
                 sta.executeUpdate();
 
                 //request.getRequestDispatcher("index.jsp").forward(request, response);
@@ -160,9 +196,9 @@ public class ServletPacientes extends HttpServlet {
                 String email = request.getParameter("txtEmail");
                 String espaciente = request.getParameter("txtEsPaciente");
                 String espersona = request.getParameter("txtEsPersona");
-                String esmedico = request.getParameter("txtEsMedico");                
+                String esmedico = request.getParameter("txtEsMedico");
 
-                PreparedStatement sta = ConexionDB.getConexion().prepareStatement("UPDATE usuario SET "
+                PreparedStatement sta = ConexionDB.getConexion().prepareStatement("UPDATE persona SET "
                         + "tipodocumento=?,documento=?,apellidospaterno=?,apellidosmaterno=?,"
                         + "nombres=?, fechanacimiento=?, sexo=?, email=?, espaciente=?, "
                         + "espersona=?,esmedico=?,fecha=?,estado=? WHERE idpersona=?");
@@ -177,12 +213,12 @@ public class ServletPacientes extends HttpServlet {
                 sta.setString(8, email);
                 sta.setInt(9, Integer.parseInt(espaciente));
                 sta.setInt(10, Integer.parseInt(espersona));
-                sta.setInt(11, Integer.parseInt(esmedico));                
+                sta.setInt(11, Integer.parseInt(esmedico));
                 sta.setTimestamp(12, getCurrentTimeStamp());
                 sta.setInt(13, estado);
                 sta.setInt(14, Integer.parseInt(id));
                 sta.executeUpdate();
-                
+
                 response.sendRedirect("ServletPacientes");
 
             } catch (Exception e) {
