@@ -129,7 +129,7 @@ public class ServletPacientes extends HttpServlet {
                 String fecha_nac = request.getParameter("txtFechaNac");
                 String sexo = request.getParameter("txtSexo");
                 String email = request.getParameter("txtEmail");
-                
+
                 int espaciente;
                 if ("on".equals(request.getParameter("flexRadioEsPaciente"))) {
                     espaciente = 1;
@@ -143,14 +143,14 @@ public class ServletPacientes extends HttpServlet {
                 } else {
                     espersona = 0;
                 }
-                
+
                 int esmedico;
                 if ("on".equals(request.getParameter("flexRadioEsMedico"))) {
                     esmedico = 1;
                 } else {
                     esmedico = 0;
                 }
-                
+
                 PreparedStatement sta = ConexionDB.getConexion().prepareStatement("insert into persona values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
                 sta.setInt(1, 0);
@@ -194,9 +194,27 @@ public class ServletPacientes extends HttpServlet {
                 String fecha_nac = request.getParameter("txtFechaNac");
                 String sexo = request.getParameter("txtSexo");
                 String email = request.getParameter("txtEmail");
-                String espaciente = request.getParameter("txtEsPaciente");
-                String espersona = request.getParameter("txtEsPersona");
-                String esmedico = request.getParameter("txtEsMedico");
+
+                int espaciente;
+                if ("on".equals(request.getParameter("flexRadioEsPaciente"))) {
+                    espaciente = 1;
+                } else {
+                    espaciente = 0;
+                }
+
+                int espersona;
+                if ("on".equals(request.getParameter("flexRadioEsPersona"))) {
+                    espersona = 1;
+                } else {
+                    espersona = 0;
+                }
+
+                int esmedico;
+                if ("on".equals(request.getParameter("flexRadioEsMedico"))) {
+                    esmedico = 1;
+                } else {
+                    esmedico = 0;
+                }
 
                 PreparedStatement sta = ConexionDB.getConexion().prepareStatement("UPDATE persona SET "
                         + "tipodocumento=?,documento=?,apellidospaterno=?,apellidosmaterno=?,"
@@ -211,9 +229,9 @@ public class ServletPacientes extends HttpServlet {
                 sta.setString(6, fecha_nac);
                 sta.setString(7, sexo);
                 sta.setString(8, email);
-                sta.setInt(9, Integer.parseInt(espaciente));
-                sta.setInt(10, Integer.parseInt(espersona));
-                sta.setInt(11, Integer.parseInt(esmedico));
+                sta.setInt(9, espaciente);
+                sta.setInt(10, espersona);
+                sta.setInt(11, esmedico);
                 sta.setTimestamp(12, getCurrentTimeStamp());
                 sta.setInt(13, estado);
                 sta.setInt(14, Integer.parseInt(id));

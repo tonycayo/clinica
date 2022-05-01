@@ -13,7 +13,6 @@ public class Usuarios {
         this.fecha_reg = fecha_reg;
     }
 
-
     public int getId() {
         return id;
     }

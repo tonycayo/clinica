@@ -11,10 +11,6 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
-/**
- *
- * @author administrador
- */
 @WebServlet(name = "ServletUsuarios", urlPatterns = {"/ServletUsuarios"})
 public class ServletUsuarios extends HttpServlet {
 
@@ -152,7 +148,7 @@ public class ServletUsuarios extends HttpServlet {
                     estado = 0;
                 }
 
-                String id = request.getParameter("updId");
+                int id = Integer.parseInt(request.getParameter("updId"));
                 String u_pass = request.getParameter("txtPassword");
                 String tipo_usuario = request.getParameter("txtTipoUsuario");
 
@@ -162,7 +158,7 @@ public class ServletUsuarios extends HttpServlet {
                 sta.setString(2, tipo_usuario);
                 sta.setTimestamp(3, getCurrentTimeStamp());
                 sta.setInt(4, estado);
-                sta.setInt(5, Integer.parseInt(id));
+                sta.setInt(5, id);
                 sta.executeUpdate();
 
                 //request.getRequestDispatcher("index.jsp").forward(request, response);

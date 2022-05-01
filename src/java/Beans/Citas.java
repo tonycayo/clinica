@@ -4,16 +4,14 @@ public class Citas {
     private int id,estado,idhorario,idpersona,estadocita;
     private String fecha_cita,fecha_ini,fecha_fin,fecha_reg;
 
-    public Citas(int id, int estado, int idhorario, int idpersona, int estadocita, String fecha_cita, String fecha_ini, String fecha_fin, String fecha_reg) {
-        this.id = id;
-        this.estado = estado;
+    public Citas(int id, int idhorario, int idpersona, String fecha_ini, String fecha_fin, String fecha_reg, int estado) {
+        this.id = id;        
         this.idhorario = idhorario;
-        this.idpersona = idpersona;
-        this.estadocita = estadocita;
-        this.fecha_cita = fecha_cita;
+        this.idpersona = idpersona;                
         this.fecha_ini = fecha_ini;
-        this.fecha_fin = fecha_fin;
+        this.fecha_fin = fecha_fin;        
         this.fecha_reg = fecha_reg;
+        this.estado = estado;
     }
 
     public int getId() {
@@ -87,6 +85,7 @@ public class Citas {
     public void setFecha_reg(String fecha_reg) {
         this.fecha_reg = fecha_reg;
     }
+
     
     
 }
