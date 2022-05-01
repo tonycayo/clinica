@@ -23,24 +23,21 @@ USE `clinica`;
 -- Dumping structure for table clinica.citas
 DROP TABLE IF EXISTS `citas`;
 CREATE TABLE IF NOT EXISTS `citas` (
-  `IDCITAS` int(11) NOT NULL,
+  `IDCITA` int(11) NOT NULL AUTO_INCREMENT,
   `IDHORARIO` int(11) DEFAULT NULL,
   `IDPERSONA` int(11) DEFAULT NULL,
-  `FECHACITA` date DEFAULT NULL,
   `FECHAHORACITAINI` datetime DEFAULT NULL,
   `FECHAHORACITAFIN` datetime DEFAULT NULL,
-  `ESTADOCITA` int(11) DEFAULT NULL,
   `FECHA` date DEFAULT NULL,
   `ESTADO` int(11) DEFAULT NULL,
-  PRIMARY KEY (`IDCITAS`),
-  KEY `FK_REFERENCE_5` (`IDHORARIO`),
-  KEY `FK_REFERENCE_6` (`IDPERSONA`),
-  CONSTRAINT `FK_REFERENCE_5` FOREIGN KEY (`IDHORARIO`) REFERENCES `horario` (`IDHORARIO`),
-  CONSTRAINT `FK_REFERENCE_6` FOREIGN KEY (`IDPERSONA`) REFERENCES `persona` (`IDPERSONA`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  PRIMARY KEY (`IDCITA`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table clinica.citas: ~0 rows (approximately)
+-- Dumping data for table clinica.citas: ~2 rows (approximately)
 DELETE FROM `citas`;
+INSERT INTO `citas` (`IDCITA`, `IDHORARIO`, `IDPERSONA`, `FECHAHORACITAINI`, `FECHAHORACITAFIN`, `FECHA`, `ESTADO`) VALUES
+	(1, 2, 3, '2022-05-01 05:23:47', '2022-05-01 05:23:47', '2022-05-01', 1),
+	(3, 32, 24, '2022-05-01 05:31:30', '2022-05-01 05:31:30', '2022-05-01', 1);
 
 -- Dumping structure for table clinica.especialidad
 DROP TABLE IF EXISTS `especialidad`;
@@ -69,8 +66,7 @@ CREATE TABLE IF NOT EXISTS `horario` (
   `COMENTARIOS` varchar(30) DEFAULT NULL,
   `ESTADO` int(11) DEFAULT NULL,
   PRIMARY KEY (`IDHORARIO`),
-  KEY `FK_REFERENCE_4` (`IDPERSONA`,`IDESPECIALIDAD`),
-  CONSTRAINT `FK_REFERENCE_4` FOREIGN KEY (`IDPERSONA`, `IDESPECIALIDAD`) REFERENCES `medico` (`IDPERSONA`, `IDESPECIALIDAD`)
+  KEY `FK_REFERENCE_4` (`IDPERSONA`,`IDESPECIALIDAD`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Dumping data for table clinica.horario: ~0 rows (approximately)
@@ -79,26 +75,27 @@ DELETE FROM `horario`;
 -- Dumping structure for table clinica.medico
 DROP TABLE IF EXISTS `medico`;
 CREATE TABLE IF NOT EXISTS `medico` (
-  `IDPERSONA` int(11) NOT NULL,
-  `IDESPECIALIDAD` int(11) NOT NULL,
+  `IDPERSONA` int(11) NOT NULL AUTO_INCREMENT,
+  `IDESPECIALIDAD` int(11) DEFAULT NULL,
   `TIPOPERSONA` varchar(15) DEFAULT NULL,
   `CODIGOMEDICO` varchar(15) DEFAULT NULL,
   `FECHAINGRESO` date DEFAULT NULL,
   `FECHA` date DEFAULT NULL,
   `ESTADO` int(11) DEFAULT NULL,
-  PRIMARY KEY (`IDPERSONA`,`IDESPECIALIDAD`),
-  KEY `FK_REFERENCE_3` (`IDESPECIALIDAD`),
-  CONSTRAINT `FK_REFERENCE_2` FOREIGN KEY (`IDPERSONA`) REFERENCES `persona` (`IDPERSONA`),
-  CONSTRAINT `FK_REFERENCE_3` FOREIGN KEY (`IDESPECIALIDAD`) REFERENCES `especialidad` (`IDESPECIALIDAD`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  PRIMARY KEY (`IDPERSONA`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table clinica.medico: ~0 rows (approximately)
+-- Dumping data for table clinica.medico: ~3 rows (approximately)
 DELETE FROM `medico`;
+INSERT INTO `medico` (`IDPERSONA`, `IDESPECIALIDAD`, `TIPOPERSONA`, `CODIGOMEDICO`, `FECHAINGRESO`, `FECHA`, `ESTADO`) VALUES
+	(2, 2, '21543534245', '2022-04-30', '2022-04-30', '2022-04-30', 1),
+	(4, 1, '2', '12345678', '2022-04-30', '2022-04-30', 1),
+	(6, 7, '34', '0980890', '2022-04-30', '2022-04-30', 0);
 
 -- Dumping structure for table clinica.persona
 DROP TABLE IF EXISTS `persona`;
 CREATE TABLE IF NOT EXISTS `persona` (
-  `IDPERSONA` int(11) NOT NULL,
+  `IDPERSONA` int(11) NOT NULL AUTO_INCREMENT,
   `TIPODOCUMENTO` varchar(15) DEFAULT NULL,
   `DOCUMENTO` varchar(15) DEFAULT NULL,
   `APELLIDOSPATERNO` varchar(50) DEFAULT NULL,
@@ -114,28 +111,33 @@ CREATE TABLE IF NOT EXISTS `persona` (
   `FECHA` date DEFAULT NULL,
   `ESTADO` int(11) DEFAULT NULL,
   PRIMARY KEY (`IDPERSONA`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table clinica.persona: ~0 rows (approximately)
+-- Dumping data for table clinica.persona: ~3 rows (approximately)
 DELETE FROM `persona`;
+INSERT INTO `persona` (`IDPERSONA`, `TIPODOCUMENTO`, `DOCUMENTO`, `APELLIDOSPATERNO`, `APELLIDOSMATERNO`, `NOMBRES`, `NOMBRECOMPLETO`, `FECHANACIMIENTO`, `SEXO`, `EMAIL`, `ESPACIENTE`, `ESPERSONA`, `ESMEDICO`, `FECHA`, `ESTADO`) VALUES
+	(2, '2', '10297829', 'Cayo', 'Bolarte', 'Tony', 'Tony Cayo Bolarte', '2022-05-01', 'M', 'a@b.com', 1, 1, 1, '2022-05-01', 1),
+	(3, '1', '41425425654', 'De Los', 'Palotes', 'Perico', 'Perico De Los Palotes', '2022-05-01', 'M', 'c@f.com', 1, 1, 1, '2022-05-01', 1),
+	(6, '1', '234343242', 'Musk', '', 'Elon', '  ', '2022-05-01', 'M', 'elon@twitter.com', 1, 1, 1, '2022-05-01', 1);
 
 -- Dumping structure for table clinica.usuario
 DROP TABLE IF EXISTS `usuario`;
 CREATE TABLE IF NOT EXISTS `usuario` (
   `IDPERSONA` int(11) NOT NULL AUTO_INCREMENT,
-  `USUARIO` varchar(15) NOT NULL,
-  `PASSWORD` varchar(25) NOT NULL,
-  `TIPOUSUARIO` varchar(20) NOT NULL,
-  `FECHA` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `ESTADO` int(11) NOT NULL,
+  `USUARIO` varchar(15) DEFAULT NULL,
+  `PASSWORD` varchar(25) DEFAULT NULL,
+  `TIPOUSUARIO` varchar(20) DEFAULT NULL,
+  `FECHA` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `ESTADO` int(11) DEFAULT NULL,
   PRIMARY KEY (`IDPERSONA`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table clinica.usuario: ~18 rows (approximately)
+-- Dumping data for table clinica.usuario: ~3 rows (approximately)
 DELETE FROM `usuario`;
 INSERT INTO `usuario` (`IDPERSONA`, `USUARIO`, `PASSWORD`, `TIPOUSUARIO`, `FECHA`, `ESTADO`) VALUES
-	(1, 'administrador', '123', 'admin', '2022-04-30 15:10:31', 0),
-	(20, 'gladys', 'nuevopass', 'soporte', '2022-04-30 15:39:09', 1);
+	(1, 'administrador', '5ertye5ytyr', 'admin', '2022-04-30 20:30:59', 0),
+	(23, 'tcayo', '1234', 'admin', '2022-04-30 19:55:18', 1),
+	(26, 'prueba1', '111111', 'visitante', '2022-04-30 21:19:39', 1);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
