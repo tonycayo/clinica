@@ -20,9 +20,9 @@ DROP DATABASE IF EXISTS `clinica`;
 CREATE DATABASE IF NOT EXISTS `clinica` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
 USE `clinica`;
 
--- Dumping structure for table clinica.citas
-DROP TABLE IF EXISTS `citas`;
-CREATE TABLE IF NOT EXISTS `citas` (
+-- Dumping structure for table clinica.cita
+DROP TABLE IF EXISTS `cita`;
+CREATE TABLE IF NOT EXISTS `cita` (
   `IDCITA` int(11) NOT NULL AUTO_INCREMENT,
   `IDHORARIO` int(11) DEFAULT NULL,
   `IDPERSONA` int(11) DEFAULT NULL,
@@ -33,10 +33,10 @@ CREATE TABLE IF NOT EXISTS `citas` (
   PRIMARY KEY (`IDCITA`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table clinica.citas: ~2 rows (approximately)
-DELETE FROM `citas`;
-INSERT INTO `citas` (`IDCITA`, `IDHORARIO`, `IDPERSONA`, `FECHAHORACITAINI`, `FECHAHORACITAFIN`, `FECHA`, `ESTADO`) VALUES
-	(1, 2, 3, '2022-05-01 05:23:47', '2022-05-01 05:23:47', '2022-05-01', 1),
+-- Dumping data for table clinica.cita: ~1 rows (approximately)
+DELETE FROM `cita`;
+INSERT INTO `cita` (`IDCITA`, `IDHORARIO`, `IDPERSONA`, `FECHAHORACITAINI`, `FECHAHORACITAFIN`, `FECHA`, `ESTADO`) VALUES
+	(1, 2, 3, '2022-05-02 09:12:06', '2022-05-02 09:12:06', '2022-05-02', 1),
 	(3, 32, 24, '2022-05-01 05:31:30', '2022-05-01 05:31:30', '2022-05-01', 1);
 
 -- Dumping structure for table clinica.especialidad
@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS `especialidad` (
   PRIMARY KEY (`IDESPECIALIDAD`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table clinica.especialidad: ~2 rows (approximately)
+-- Dumping data for table clinica.especialidad: ~5 rows (approximately)
 DELETE FROM `especialidad`;
 INSERT INTO `especialidad` (`IDESPECIALIDAD`, `CODIGO`, `DESCRIPCION`, `FECHA`, `ESTADO`) VALUES
 	(1, '00001', 'Neurología', '2022-05-01', 1),
@@ -75,11 +75,28 @@ CREATE TABLE IF NOT EXISTS `horario` (
   KEY `FK_REFERENCE_4` (`IDPERSONA`,`IDESPECIALIDAD`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table clinica.horario: ~0 rows (approximately)
+-- Dumping data for table clinica.horario: ~2 rows (approximately)
 DELETE FROM `horario`;
 INSERT INTO `horario` (`IDHORARIO`, `IDPERSONA`, `IDESPECIALIDAD`, `FECHAHORAINICIO`, `FECHAHORAFIN`, `TIPOHORARIO`, `COMENTARIOS`, `FECHA`, `ESTADO`) VALUES
 	(1, 4, 5, '2022-05-01 23:29:51', '2022-05-01 23:29:51', '4', 'comentario1', '2022-05-01', 1),
 	(3, 7, 5, '2022-05-01 23:40:46', '2022-05-01 23:40:46', '8', 'horario2', '2022-05-01', 0);
+
+-- Dumping structure for table clinica.log
+DROP TABLE IF EXISTS `log`;
+CREATE TABLE IF NOT EXISTS `log` (
+  `IDLOG` int(11) NOT NULL AUTO_INCREMENT,
+  `LOGIN` varchar(50) DEFAULT NULL,
+  `REMOTEADDR` varchar(50) DEFAULT NULL,
+  `REMOTEHOST` varchar(50) DEFAULT NULL,
+  `X-FORWARDED-FOR` varchar(50) DEFAULT NULL,
+  `ACCION` varchar(50) DEFAULT NULL,
+  `URL` varchar(255) DEFAULT NULL,
+  `FECHAREG` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`IDLOG`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Dumping data for table clinica.log: ~0 rows (approximately)
+DELETE FROM `log`;
 
 -- Dumping structure for table clinica.medico
 DROP TABLE IF EXISTS `medico`;
@@ -122,7 +139,7 @@ CREATE TABLE IF NOT EXISTS `persona` (
   PRIMARY KEY (`IDPERSONA`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table clinica.persona: ~3 rows (approximately)
+-- Dumping data for table clinica.persona: ~2 rows (approximately)
 DELETE FROM `persona`;
 INSERT INTO `persona` (`IDPERSONA`, `TIPODOCUMENTO`, `DOCUMENTO`, `APELLIDOSPATERNO`, `APELLIDOSMATERNO`, `NOMBRES`, `NOMBRECOMPLETO`, `FECHANACIMIENTO`, `SEXO`, `EMAIL`, `ESPACIENTE`, `ESPERSONA`, `ESMEDICO`, `FECHA`, `ESTADO`) VALUES
 	(6, '1', '234343242', 'Musk', 'Axe', 'Elon', '  ', '2022-05-01', 'M', 'elon@twitter.com', 1, 0, 1, '2022-05-01', 1),

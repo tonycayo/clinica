@@ -47,7 +47,7 @@ public class ServletCitas extends HttpServlet {
         String actualizar = request.getParameter("upd");
         if (borrar != null) {
             try {
-                PreparedStatement sta = ConexionDB.getConexion().prepareStatement("delete from citas where idpersona=?");
+                PreparedStatement sta = ConexionDB.getConexion().prepareStatement("delete from cita where idpersona=?");
                 sta.setInt(1, Integer.parseInt(borrar));
                 sta.executeUpdate();
 
@@ -58,7 +58,7 @@ public class ServletCitas extends HttpServlet {
             }
         } else if (actualizar != null) {
             try {
-                PreparedStatement sta = ConexionDB.getConexion().prepareStatement("select * from citas where idcita=?");
+                PreparedStatement sta = ConexionDB.getConexion().prepareStatement("select * from cita where idcita=?");
                 sta.setInt(1, Integer.parseInt(actualizar));
                 ResultSet rs = sta.executeQuery();
 
@@ -77,7 +77,7 @@ public class ServletCitas extends HttpServlet {
             }
         } else {
             try {
-                PreparedStatement sta = ConexionDB.getConexion().prepareStatement("select * from citas");
+                PreparedStatement sta = ConexionDB.getConexion().prepareStatement("select * from cita");
                 ResultSet rs = sta.executeQuery();
 
                 ArrayList<Citas> lista = new ArrayList<>();
@@ -126,7 +126,7 @@ public class ServletCitas extends HttpServlet {
                 String fechafin = request.getParameter("txtFechaFin");
                 String fechareg = request.getParameter("txtFechaReg");
 
-                PreparedStatement sta = ConexionDB.getConexion().prepareStatement("insert into citas values(?,?,?,?,?,?,?)");
+                PreparedStatement sta = ConexionDB.getConexion().prepareStatement("insert into cita values(?,?,?,?,?,?,?)");
 
                 sta.setInt(1, 0);
                 sta.setInt(2, idhorario);
@@ -158,7 +158,7 @@ public class ServletCitas extends HttpServlet {
                 String fechafin = request.getParameter("txtFechaFin");
                 String fechareg = request.getParameter("txtFechaReg");
 
-                PreparedStatement sta = ConexionDB.getConexion().prepareStatement("UPDATE citas SET idhorario=?,idpersona=?,fechahoracitaini=?,fechahoracitafin=?,fecha=?,estado=? WHERE idcita=?");
+                PreparedStatement sta = ConexionDB.getConexion().prepareStatement("UPDATE cita SET idhorario=?,idpersona=?,fechahoracitaini=?,fechahoracitafin=?,fecha=?,estado=? WHERE idcita=?");
                 
                 sta.setInt(1, idhorario);
                 sta.setInt(2, idpersona);
