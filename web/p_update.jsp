@@ -55,21 +55,7 @@
                 <label class="form-check-label" for="flexRadioDefault2">
                     No
                 </label>
-            </div></td>
-    </tr><tr>
-        <td>¿Es persona?: </td>
-        <td><div class="form-check">
-                <input class="form-check-input" type="radio" name="flexRadioEsPersona" id="flexRadioDefault1" checked>
-                <label class="form-check-label" for="flexRadioDefault1">
-                    Sí
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="flexRadioEsPersona" id="flexRadioDefault2">
-                <label class="form-check-label" for="flexRadioDefault2">
-                    No
-                </label>
-            </div></td>
+            </div></td>            
     </tr><tr>
         <td>¿Es médico?: </td>
         <td><div class="form-check">

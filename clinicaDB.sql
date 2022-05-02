@@ -42,35 +42,44 @@ INSERT INTO `citas` (`IDCITA`, `IDHORARIO`, `IDPERSONA`, `FECHAHORACITAINI`, `FE
 -- Dumping structure for table clinica.especialidad
 DROP TABLE IF EXISTS `especialidad`;
 CREATE TABLE IF NOT EXISTS `especialidad` (
-  `IDESPECIALIDAD` int(11) NOT NULL,
+  `IDESPECIALIDAD` int(11) NOT NULL AUTO_INCREMENT,
   `CODIGO` varchar(15) DEFAULT NULL,
-  `DESCRIPCION` varchar(15) DEFAULT NULL,
+  `DESCRIPCION` varchar(50) DEFAULT NULL,
   `FECHA` date DEFAULT NULL,
   `ESTADO` int(11) DEFAULT NULL,
   PRIMARY KEY (`IDESPECIALIDAD`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table clinica.especialidad: ~0 rows (approximately)
+-- Dumping data for table clinica.especialidad: ~2 rows (approximately)
 DELETE FROM `especialidad`;
+INSERT INTO `especialidad` (`IDESPECIALIDAD`, `CODIGO`, `DESCRIPCION`, `FECHA`, `ESTADO`) VALUES
+	(1, '00001', 'Neurología', '2022-05-01', 1),
+	(2, '00002', 'Psiquiatría', '2022-05-01', 1),
+	(3, '00003', 'Radiología', '2022-05-01', 1),
+	(4, '00004', 'Medicina General', '2022-05-01', 0),
+	(6, '00006', 'PediatrÃ­a', '2022-05-01', 0);
 
 -- Dumping structure for table clinica.horario
 DROP TABLE IF EXISTS `horario`;
 CREATE TABLE IF NOT EXISTS `horario` (
-  `IDHORARIO` int(11) NOT NULL,
+  `IDHORARIO` int(11) NOT NULL AUTO_INCREMENT,
   `IDPERSONA` int(11) DEFAULT NULL,
   `IDESPECIALIDAD` int(11) DEFAULT NULL,
-  `FECHAHORARIO` date DEFAULT NULL,
   `FECHAHORAINICIO` datetime DEFAULT NULL,
   `FECHAHORAFIN` datetime DEFAULT NULL,
   `TIPOHORARIO` varchar(15) DEFAULT NULL,
   `COMENTARIOS` varchar(30) DEFAULT NULL,
+  `FECHA` date DEFAULT NULL,
   `ESTADO` int(11) DEFAULT NULL,
   PRIMARY KEY (`IDHORARIO`),
   KEY `FK_REFERENCE_4` (`IDPERSONA`,`IDESPECIALIDAD`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
 -- Dumping data for table clinica.horario: ~0 rows (approximately)
 DELETE FROM `horario`;
+INSERT INTO `horario` (`IDHORARIO`, `IDPERSONA`, `IDESPECIALIDAD`, `FECHAHORAINICIO`, `FECHAHORAFIN`, `TIPOHORARIO`, `COMENTARIOS`, `FECHA`, `ESTADO`) VALUES
+	(1, 4, 5, '2022-05-01 23:29:51', '2022-05-01 23:29:51', '4', 'comentario1', '2022-05-01', 1),
+	(3, 7, 5, '2022-05-01 23:40:46', '2022-05-01 23:40:46', '8', 'horario2', '2022-05-01', 0);
 
 -- Dumping structure for table clinica.medico
 DROP TABLE IF EXISTS `medico`;
@@ -111,14 +120,13 @@ CREATE TABLE IF NOT EXISTS `persona` (
   `FECHA` date DEFAULT NULL,
   `ESTADO` int(11) DEFAULT NULL,
   PRIMARY KEY (`IDPERSONA`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 
 -- Dumping data for table clinica.persona: ~3 rows (approximately)
 DELETE FROM `persona`;
 INSERT INTO `persona` (`IDPERSONA`, `TIPODOCUMENTO`, `DOCUMENTO`, `APELLIDOSPATERNO`, `APELLIDOSMATERNO`, `NOMBRES`, `NOMBRECOMPLETO`, `FECHANACIMIENTO`, `SEXO`, `EMAIL`, `ESPACIENTE`, `ESPERSONA`, `ESMEDICO`, `FECHA`, `ESTADO`) VALUES
-	(2, '2', '10297829', 'Cayo', 'Bolarte', 'Tony', 'Tony Cayo Bolarte', '2022-05-01', 'M', 'a@b.com', 1, 1, 1, '2022-05-01', 1),
-	(3, '1', '41425425654', 'De Los', 'Palotes', 'Perico', 'Perico De Los Palotes', '2022-05-01', 'M', 'c@f.com', 1, 1, 1, '2022-05-01', 1),
-	(6, '1', '234343242', 'Musk', '', 'Elon', '  ', '2022-05-01', 'M', 'elon@twitter.com', 1, 1, 1, '2022-05-01', 1);
+	(6, '1', '234343242', 'Musk', 'Axe', 'Elon', '  ', '2022-05-01', 'M', 'elon@twitter.com', 1, 0, 1, '2022-05-01', 1),
+	(7, '2', '10297892', 'Gates', 'Windows', 'Bill', 'Bill Gates Windows', '2022-05-01', 'M', 'bill@microsoft.com', 1, 1, 1, '2022-05-01', 1);
 
 -- Dumping structure for table clinica.usuario
 DROP TABLE IF EXISTS `usuario`;

@@ -1,16 +1,16 @@
-<%@page import="Beans.Usuarios"%>
+<%@page import="Beans.Especialidades"%>
 <%@page import="java.util.ArrayList"%>
 <jsp:include page="header.jsp" />  
 
-<h3 align="center">Actualizar Usuario</h3>
+<h3 align="center">Actualizar Especialidad</h3>
 <div class="container">
-    <form action="ServletUsuarios" method="post">
+    <form action="ServletEspecialidades" method="post">
     <table class="table">    
                        
         <%
-            ArrayList<Usuarios> lista = (ArrayList<Usuarios>) request.getAttribute("u_lista");
+            ArrayList<Especialidades> lista = (ArrayList<Especialidades>) request.getAttribute("e_lista");
             for (int i = 0; i < lista.size(); i++) {
-                Usuarios u = lista.get(i);
+                Especialidades e = lista.get(i);
         %>
                
         <tr>
@@ -18,20 +18,17 @@
                 <input class="form-check-input" type="checkbox" role="switch" name="chkActivo" id="flexSwitchCheckChecked" checked>
                 <label class="form-check-label" for="flexSwitchCheckChecked">Registro activo</label>
             </div>
-        </tr><tr>
-        <td>Usuario: </td>
-        <td><input type="text" name="txtUsuario" value="<%=u.getUsuario()%>" class="form-control"></td>
+        </tr><tr>        
+        <td>Código: </td>
+        <td><input type="text" name="txtCodigo" value="<%=e.getCodigo()%>" class="form-control"></td>
     </tr><tr>
-        <td>Password: </td>
-        <td><input type="password" name="txtPassword" value="<%=u.getU_pass()%>" class="form-control"></td>
-    </tr><tr>
-        <td>Tipo de Usuario: </td>
-        <td><input type="text" name="txtTipoUsuario" value="<%=u.getTipo_usuario()%>" class="form-control"></td>
+        <td>Descripción: </td>
+        <td><input type="text" name="txtDescripcion" value="<%=e.getDescripcion()%>" class="form-control"></td>
     </tr><tr>
         <td></td>
         <td><input type="submit" value="Grabar Datos" class="btn btn-success"></td>
-    </tr><!-- comment -->
-        <input type="hidden" name="updId" value="<%=u.getId()%>">
+    </tr>
+        <input type="hidden" name="updId" value="<%=e.getId()%>">
         <%
             }
         %>                      

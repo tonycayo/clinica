@@ -1,4 +1,5 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -56,8 +57,9 @@
                                 Herramientas
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                                <li><a class="dropdown-item" href="ServletUsuarios">Listar usuarios</a></li>
-                                <li><a class="dropdown-item" href="u_nuevo.jsp">Nuevo usuario</a></li>
+                                <li><a class="dropdown-item" href="ServletUsuarios">Usuarios</a></li>
+                                <li><a class="dropdown-item" href="ServletEspecialidades">Especialidades</a></li>
+                                <li><a class="dropdown-item" href="ServletHorarios">Horarios</a></li>
                                 <li><hr class="dropdown-divider"></li>                                
                                 <li><a class="dropdown-item disabled" href="#">Mantenimiento de BD</a></li>
                             </ul>

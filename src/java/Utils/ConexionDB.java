@@ -6,7 +6,7 @@ public class ConexionDB {
 
     public static Connection getConexion() {
         Connection con = null;
-        String cadena = "jdbc:mysql://localhost/clinica?user=root&password=";
+        String cadena = "jdbc:mysql://localhost/clinica?user=root&password=&useUnicode=true&characterEncoding=utf-8";
         try {
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection(cadena);

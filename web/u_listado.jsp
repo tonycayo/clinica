@@ -31,6 +31,9 @@
         <%
             }
         %>
+        <tr><td></td>
+            <td><a href="u_nuevo.jsp"><button class="btn btn-success">Agregar registro</button></a></td> <!--btn btn-success es un boton de bootstrap de color verde-->
+        </tr>    
     </table>
 </div>               
 </body>
