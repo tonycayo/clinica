@@ -8,7 +8,6 @@
         <tr>
             <th>Id</th>            
             <th>Usuario</th>
-            <th>Password</th>
             <th>Tipo de Usuario</th>
             <th>Fecha de Registro</th>
             <th>Estado</th>
@@ -20,8 +19,7 @@
         %>
         <tr>
             <td><%=u.getId()%></td>            
-            <td><%=u.getUsuario()%></td>
-            <td><%=u.getU_pass()%></td>
+            <td><%=u.getUsuario()%></td>            
             <td><%=u.getTipo_usuario()%></td>
             <td><%=u.getFecha_reg()%></td>            
             <td><%=u.getEstado()%></td>

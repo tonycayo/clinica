@@ -30,7 +30,8 @@ public class ServletEspecialidades extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+       
+        response.setContentType("text/html;charset=ISO-8859-1");        
 
     }
 
@@ -133,13 +134,13 @@ public class ServletEspecialidades extends HttpServlet {
 
                 sta.setInt(1, 0);
                 sta.setString(2, codigo);
-                sta.setString(3, descripcion);                
+                sta.setString(3, descripcion);
                 sta.setTimestamp(4, getCurrentTimeStamp());
-                out.println("estado: "+estado);
+                out.println("estado: " + estado);
                 sta.setInt(5, estado);
-                
+
                 sta.executeUpdate();
-                
+
                 response.sendRedirect("ServletEspecialidades");
 
             } catch (Exception e) {
@@ -155,21 +156,21 @@ public class ServletEspecialidades extends HttpServlet {
                 }
 
                 int id = Integer.parseInt(request.getParameter("updId"));
-                
+
                 String codigo = request.getParameter("txtCodigo");
                 String descripcion = request.getParameter("txtDescripcion");
                 String fecha = request.getParameter("txtFecha_reg");
 
                 PreparedStatement sta = ConexionDB.getConexion().prepareStatement("UPDATE especialidad SET codigo=?,descripcion=?,fecha=?,estado=? WHERE idespecialidad=?");
-                
+
                 sta.setString(1, codigo);
-                sta.setString(2, descripcion);                
+                sta.setString(2, descripcion);
                 sta.setTimestamp(3, getCurrentTimeStamp());
-                sta.setInt(4, estado);                
-                
+                sta.setInt(4, estado);
+
                 sta.setInt(5, id);
                 sta.executeUpdate();
-                
+
                 response.sendRedirect("ServletEspecialidades");
 
             } catch (Exception e) {

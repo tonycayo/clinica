@@ -1,4 +1,20 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page session="true" %>
+<%
+    String usuario = "";
+    String perfil = "";
+    HttpSession sesionOk = request.getSession();
+    if (sesionOk.getAttribute("nombre") == null) {
+%>
+<jsp:forward page="index.jsp">
+    <jsp:param name="msg" value="Debe iniciar sesión para acceder al Sistema"/>
+</jsp:forward>
+<%
+    } else {
+        usuario = (String) sesionOk.getAttribute("nombre");
+        perfil = (String) sesionOk.getAttribute("perfil");
+    }
+%>
 
 <!DOCTYPE html>
 <html>
@@ -13,7 +29,7 @@
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" href="index.jsp">CLÍNICA</a>
+                <a class="navbar-brand" href="home.jsp">CLÍNICA</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -65,10 +81,10 @@
                             </ul>
                         </li>
                     </ul>
-                    <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
-                        <button class="btn btn-outline-success disabled" type="submit">Buscar</button>
-                    </form>
+                    <span class="navbar-text">
+                        Usuario: <b><%=usuario%></b> | Perfil: <%=perfil%>&nbsp&nbsp
+                        <a href="ServletLogin?op=cerrar"><button class="btn btn-danger">Cerrar sesión</button></a>
+                    </span>
                 </div>
             </div>
         </nav>

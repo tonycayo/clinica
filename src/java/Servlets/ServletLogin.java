@@ -1,20 +1,19 @@
 package Servlets;
 
-import Beans.Logs;
 import Utils.ConexionDB;
-import Utils.Tools;
-import static Utils.Tools.getCurrentTimeStamp;
 import java.io.IOException;
 import java.io.PrintWriter;
-import static java.lang.System.out;
-import java.sql.*;
-import java.util.*;
-import javax.servlet.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-@WebServlet(name = "ServletLogs", urlPatterns = {"/ServletLogs"})
-public class ServletLogs extends HttpServlet {
+@WebServlet(name = "ServletLogin", urlPatterns = {"/ServletLogin"})
+public class ServletLogin extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,38 +44,15 @@ public class ServletLogs extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
 
-        String borrar = request.getParameter("del");
-        if (borrar != null) {
-            try {
-                PreparedStatement sta = ConexionDB.getConexion().prepareStatement("delete from log where idlog=?");
-                sta.setInt(1, Integer.parseInt(borrar));
-                sta.executeUpdate();
+        String op = request.getParameter("op");
 
-                response.sendRedirect("ServletLogs");
+        System.out.println("recibe: " + op);
 
-            } catch (Exception e) {
-                System.out.println("Error: " + e);
-            }
-        } else {
-            try {
-                PreparedStatement sta = ConexionDB.getConexion().prepareStatement("select * from log");
-                ResultSet rs = sta.executeQuery();
-
-                ArrayList<Logs> lista = new ArrayList<>();
-
-                while (rs.next()) {
-                    Logs lo = new Logs(rs.getInt(1), rs.getString(2),
-                            rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6),
-                            rs.getString(7), rs.getString(8));
-                    lista.add(lo);
-                }
-                request.setAttribute("lo_lista", lista);
-                request.getRequestDispatcher("log.jsp").forward(request, response);
-
-            } catch (Exception e) {
-                System.out.println("Error: " + e);
-            }
-        }
+        if (op.equals("cerrar")) {
+            HttpSession sesionOk = request.getSession();
+            sesionOk.invalidate();
+            request.getRequestDispatcher("index.jsp").forward(request, response);
+        }        
     }
 
     /**
@@ -91,6 +67,27 @@ public class ServletLogs extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+
+        String usu = request.getParameter("txtUsu");
+        String pas = request.getParameter("txtPas");
+        try {
+            PreparedStatement psta = ConexionDB.getConexion().
+                    prepareStatement("SELECT * FROM usuario WHERE usuario=? AND password=?");
+            psta.setString(1, usu);
+            psta.setString(2, pas);
+            ResultSet rs = psta.executeQuery();
+            if (rs.next()) {
+                HttpSession sesionOk = request.getSession();
+                sesionOk.setAttribute("nombre", rs.getString(2).toString());
+                sesionOk.setAttribute("perfil", rs.getString(4).toString());
+                request.getRequestDispatcher("home.jsp").forward(request, response);
+            } else {
+                request.setAttribute("msg", "Usuario o contraseña Incorrectos");
+                request.getRequestDispatcher("index.jsp").forward(request, response);
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
     }
 
     /**
